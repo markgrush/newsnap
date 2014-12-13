@@ -1,0 +1,1 @@
+HEROKU_POSTGRESQL_GOLD_URL: postgres://mgkdswksjlhopt:M_mM_wmzapLvEboOMBgK8YFQv_@ec2-54-83-43-49.compute-1.amazonaws.com:5432/dducu4h6efgch9
