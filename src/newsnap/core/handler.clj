@@ -13,7 +13,7 @@
      [:head
       (include-css "simple.css")
       [:title title]]
-     [:body nody]))
+     [:body body]))
      
 (def test
   [:div {:class "post"} 
