@@ -1,0 +1,1 @@
+web: lein run -m newsnap.core.handler
