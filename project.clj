@@ -7,7 +7,7 @@
                  [ring "1.3.2"]
                  [hiccup "1.0.5"]
                  [org.clojure/java.jdbc "0.3.6"]
-                 [postgresql "9.3-1102-jdbc41"]]
+                 [org.postgresql/postgresql "9.3-1102-jdbc41"]]
   :plugins [[lein-ring "0.8.13"]]
   :ring {:handler newsnap.core.handler/app}
   :profiles
