@@ -6,7 +6,7 @@
             [hiccup.page :refer [html5 include-css]]))
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
+  (GET "/" [] "<div class=\"post\">Hello Newsnap!</div>")
   (route/resources "/")
   (route/not-found "Not Found"))
 
