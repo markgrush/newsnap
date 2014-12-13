@@ -5,8 +5,22 @@
             [ring.adapter.jetty :as jetty]
             [hiccup.page :refer [html5 include-css]]))
 
+(def title "Newsnap")
+
+(defn root [& body]
+  (html5
+    [:html
+     [:head
+      (include-css "simple.css")
+      [:title title]]
+     [:body nody]))
+     
+(def test
+  [:div.post "Breaking news: Botnim!"])
+      
+
 (defroutes app-routes
-  (GET "/" [] "<div class=\"post\">Hello Newsnap!</div>")
+  (GET "/" [] (root test))
   (route/resources "/")
   (route/not-found "Not Found"))
 
