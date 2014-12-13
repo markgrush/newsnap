@@ -16,7 +16,8 @@
      [:body nody]))
      
 (def test
-  [:div.post "Breaking news: Botnim!"])
+  [:div {:class "post"} 
+   [:p "Breaking news: Botnim!"]])
       
 
 (defroutes app-routes
