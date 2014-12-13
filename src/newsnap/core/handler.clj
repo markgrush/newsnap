@@ -17,7 +17,8 @@
      
 (def test-div-css
   [:div {:class "post"}
-   [:p "Breaking news: Botnim!"]])
+   [:p {:class "title"} "Breaking news: Botnim!"]
+   [:p {:class "post"} "botnim nim nim botnim nim nim botnim nim nim"]])
       
 
 (defroutes app-routes
