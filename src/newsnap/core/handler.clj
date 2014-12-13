@@ -15,13 +15,13 @@
       [:title title]]
      [:body body]]))
      
-(def test
+(def test-div-css
   [:div {:class "post"}
    [:p "Breaking news: Botnim!"]])
       
 
 (defroutes app-routes
-  (GET "/" [] (root test))
+  (GET "/" [] (root test-div-css))
   (route/resources "/")
   (route/not-found "Not Found"))
 
