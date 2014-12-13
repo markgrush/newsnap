@@ -19,12 +19,13 @@ p.title {
 	font-size: 2.0em;
 	font-style: bold;
 	text-align: center;
-	color: "RoyalBlue";
+	color: RoyalBlue;
 }
 
 p.post {
 	font-family: Consolas, monaco, monospace;
-	font-size: 1.2em;
+	font-size: 1em;
 	text-align: left;
-	padding: 2px 5px 2px 5px;
+	padding: 0px 15px 0px 15px;
+	font-weight: 400;
 }
