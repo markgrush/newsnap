@@ -13,10 +13,10 @@
      [:head
       (include-css "simple.css")
       [:title title]]
-     [:body body]))
+     [:body body]]))
      
 (def test
-  [:div {:class "post"} 
+  [:div {:class "post"}
    [:p "Breaking news: Botnim!"]])
       
 
