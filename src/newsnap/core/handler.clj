@@ -42,7 +42,7 @@
 
 (defroutes app-routes
   (GET "/" [] (root form-test2))
-  (POST "/" req (str "the req: " req))
+  (POST "/" [body] (str "the body: " body))
   (route/resources "/")
   (route/not-found "Not Found"))
 
