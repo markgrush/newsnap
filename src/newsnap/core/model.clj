@@ -14,6 +14,10 @@
 (def spec (or (System/getenv "DATABASE_URL")
               (get-postgres-url)))
 
+(defn all-news
+  []
+  (into [] (sql/query spec ["select * from news order by id desc"])))
+
 (defn create
   [post]
   (when-not (clojure.string/blank? post)
