@@ -4,7 +4,8 @@
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
             [hiccup.form :as form]
-            [hiccup.page :refer [html5 include-css]]))
+            [hiccup.page :refer [html5 include-css]]
+            [newsnap.core.schema :as schema]))
 
 (def title "Newsnap")
 
@@ -34,5 +35,6 @@
   (handler/site app-routes))
 
 (defn -main []
+  (schema/migrate)
   (let [port (Integer/parseInt (get (System/getenv) "PORT" "5000"))]
     (jetty/run-jetty app-routes {:port port})))
