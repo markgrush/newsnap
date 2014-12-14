@@ -36,7 +36,7 @@
 (defn all-news-dom
   []
   (let [news (model/all-news)]
-    (map #([:div {:class "post"} %]) news)))
+    (cons :div (map #([:div {:class "post"} %]) news))))
       
 
 (defroutes app-routes
