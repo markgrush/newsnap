@@ -47,7 +47,7 @@
   (route/not-found "Not Found"))
 
 (def app
-  (handler/api app-routes))
+  (handler/site app-routes))
 
 (defn -main []
   ;(schema/migrate)
