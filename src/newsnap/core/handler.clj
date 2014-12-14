@@ -10,7 +10,7 @@
 
 (def title "Newsnap")
 
-(def form-test
+(defn form-test
   []
   (form/form-to [:post "/"]
                 (form/label "news" "what's your news?")
