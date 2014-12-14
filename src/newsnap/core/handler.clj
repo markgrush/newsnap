@@ -16,6 +16,9 @@
                 (form/text-field "news")
                 (form/submit-button "submit")))
 
+(def form-test2
+  "<form action=\"/\" method=\"POST\"><textarea id=\"tnews\" name=\"tnews\"></textarea><input type=\"submit\" value=\"submit\"/></form>")
+
 (defn root [& body]
   (html5
     [:html
@@ -37,7 +40,7 @@
       
 
 (defroutes app-routes
-  (GET "/" [] (root form-test (all-news-dom)))
+  (GET "/" [] (root form-test2 (all-news-dom)))
   (POST "/" [news] (str "the news: " news))
   (route/resources "/")
   (route/not-found "Not Found"))
