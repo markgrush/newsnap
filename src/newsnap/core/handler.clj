@@ -12,7 +12,6 @@
 
 (def form-test
   (form/form-to [:post "/"]
-                (form/label "nlabel" "what's your news?")
                 (form/text-area "news")
                 (form/submit-button "submit")))
 
@@ -38,7 +37,7 @@
 
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
-  (POST "/" [] (fn [req] (str "ASDASD " (get (:params req) "news"))))
+  (POST "/" [news] (str "the news: " news))
   (route/resources "/")
   (route/not-found "Not Found"))
 
