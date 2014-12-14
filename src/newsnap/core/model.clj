@@ -25,7 +25,7 @@
   []
   (when (not (migrated?))
     (print "Creating database structure...") (flush)
-    (sql/db-do-commands shout/spec
+    (sql/db-do-commands spec
                         (sql/create-table-ddl
                          :news
                          [:id :serial "PRIMARY KEY"]
