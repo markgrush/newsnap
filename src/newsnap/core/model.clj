@@ -21,5 +21,6 @@
 (defn create
   [post]
   (when-not (clojure.string/blank? post)
-    (sql/insert! spec :news {:body post}))
+    (sql/query spec [(str "insert into news (body) values (" post ")")])
+ ;   (sql/insert! spec :news {:body post}))
   (ring/redirect "/"))
