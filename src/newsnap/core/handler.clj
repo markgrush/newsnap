@@ -47,7 +47,7 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> (handler/site app-routes) (wrap-params)))
+  (-> app-routes (wrap-params)))
 
 (defn -main []
   (schema/migrate)
