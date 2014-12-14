@@ -3,7 +3,7 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
-            [ring.middleware.params :only [wrap-params]]
+            [ring.middleware.params :refer [wrap-params]]
             [hiccup.form :as form]
             [hiccup.page :refer [html5 include-css]]
             [newsnap.core.model :as model]
