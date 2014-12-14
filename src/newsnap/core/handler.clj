@@ -36,7 +36,7 @@
 (defn all-news-dom
   []
   (let [news (model/all-news)]
-    (first (map #(news-form (:body %)) news))))
+    (last (map #(news-form (:body %)) news))))
       
 
 (defroutes app-routes
