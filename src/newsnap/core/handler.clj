@@ -41,7 +41,7 @@
 
 (defroutes app-routes
   (GET "/" [] (root form-test2 (all-news-dom)))
-  (POST "/" [news] (str "the news: " news))
+  (POST "/" [tnews] (str "the news: " tnews))
   (route/resources "/")
   (route/not-found "Not Found"))
 
