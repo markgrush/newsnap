@@ -18,7 +18,7 @@
                 (form/submit-button "submit")))
 
 (def form-test2
-  "<form action=\"/\" method=\"POST\"><input type='text' name='name'/><input type=\"submit\" value=\"submit\"/></form>")
+  "<form action=\"/\" method=\"POST\"><input type='text' name='ss'/><input type=\"submit\" value=\"submit\"/></form>")
 
 (defn root [& body]
   (html5
@@ -42,7 +42,7 @@
 
 (defroutes app-routes
   (GET "/" [] (root form-test2 (all-news-dom)))
-  (POST "/" [name] (str "the name: " name))
+  (POST "/" [ss] (str "the name: " ss))
   (route/resources "/")
   (route/not-found "Not Found"))
 
