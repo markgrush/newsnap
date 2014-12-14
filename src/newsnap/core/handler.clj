@@ -41,7 +41,7 @@
       
 
 (defroutes app-routes
-  (GET "/" [] (root form-test2 (all-news-dom)))
+  (GET "/" [] (root form-test2))
   (POST "/" [ss] (str "the name: " ss))
   (route/resources "/")
   (route/not-found "Not Found"))
@@ -50,6 +50,6 @@
   (wrap-params app-routes))
 
 (defn -main []
-  (schema/migrate)
+  ;(schema/migrate)
   (let [port (Integer/parseInt (get (System/getenv) "PORT" "5000"))]
     (jetty/run-jetty app-routes {:port port})))
