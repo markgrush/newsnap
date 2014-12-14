@@ -18,7 +18,7 @@
                 (form/submit-button "submit")))
 
 (def form-test2
-  "<form action=\"/\" method=\"PUT\"><input type=\"text\" name=\"ss\"/><input type=\"submit\" value=\"submit\"/></form>")
+  "<form action=\"/\" method=\"POST\"><input type=\"text\" name=\"ss\"/><input type=\"submit\" value=\"submit\"/></form>")
 
 (defn root [& body]
   (html5
@@ -42,7 +42,7 @@
 
 (defroutes app-routes
   (GET "/" [] (root form-test2))
-  (PUT "/" {params :params} (str "the params: " params))
+  (POST "/" {params :params} (str "the params: " params))
   (route/resources "/")
   (route/not-found "Not Found"))
 
