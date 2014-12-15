@@ -7,7 +7,8 @@
             [hiccup.form :as form]
             [hiccup.page :refer [html5 include-css]]
             [newsnap.core.model :as model]
-            [newsnap.core.schema :as schema]))
+            [newsnap.core.schema :as schema])
+  (:gen-class))
 
 (def title "Newsnap")
 
@@ -49,7 +50,10 @@
 (def app
   (handler/site app-routes))
 
+(defn start [port]
+  (ring/run-jetty application {:port port :join? false}))
+
 (defn -main []
-  ;(schema/migrate)
-  (let [port (Integer/parseInt (get (System/getenv) "PORT" "5000"))]
-    (jetty/run-jetty app-routes {:port port})))
+  (schema/migrate)
+  (let [port (Integer. (or (System/getenv "PORT") "8080"))]
+    (start port)))
