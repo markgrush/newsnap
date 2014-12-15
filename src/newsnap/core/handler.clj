@@ -15,7 +15,7 @@
 (def form-test
   (form/form-to [:post "/"]
                 (form/label "news" "what's your news?")
-                (form/text-field "news")
+                (form/text-area "news")
                 (form/submit-button "submit")))
 
 (defn root [& body]
