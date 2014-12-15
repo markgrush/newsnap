@@ -51,9 +51,9 @@
   (handler/site app-routes))
 
 (defn start [port]
-  (ring/run-jetty application {:port port :join? false}))
+  (ring/run-jetty application {:port port}))
 
 (defn -main []
   (schema/migrate)
-  (let [port (Integer. (or (System/getenv "PORT") "8080"))]
+  (let [port (Integer. (or (System/getenv "PORT") "5000"))]
     (start port)))
