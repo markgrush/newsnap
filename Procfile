@@ -1,1 +1,1 @@
-web: lein run -m newsnap.core.handler
+web: java $JVM_OPTS -jar target/newsnap-standalone.jar
