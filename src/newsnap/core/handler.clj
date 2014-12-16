@@ -6,6 +6,7 @@
             [ring.middleware.params :refer [wrap-params]]
             [hiccup.form :as form]
             [hiccup.page :refer [html5 include-css]]
+            [hiccup.util :refer [escape-html]]
             [newsnap.core.model :as model]
             [newsnap.core.schema :as schema])
   (:gen-class))
@@ -40,7 +41,7 @@
 
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
-  (POST "/" [news] (model/create news))
+  (POST "/" [news] (model/create (escape-html news)))
   (route/resources "/")
   (route/not-found "Not Found"))
 
