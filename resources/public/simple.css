@@ -29,3 +29,9 @@ p.post {
 	padding: 0px 15px 0px 15px;
 	font-weight: 400;
 }
+
+textarea#news {
+	resize: none;
+    rows: 5;
+    cols: 20;
+}
