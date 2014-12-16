@@ -35,12 +35,12 @@
 (defn all-news-dom
   []
   (let [news (model/all-news)]
-    (last (map #(news-form (:body %)) news))))
+    (into [:div] (map #(news-form (:body %)) news))))
       
 
 (defroutes app-routes
-  (GET "/" [] (root form-test))
-  (POST "/" [news] (str "your news: " news))
+  (GET "/" [] (all-news-dom))
+  (POST "/" [news] (model/create news))
   (route/resources "/")
   (route/not-found "Not Found"))
 
