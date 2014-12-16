@@ -39,7 +39,7 @@
       
 
 (defroutes app-routes
-  (GET "/" [] (all-news-dom))
+  (GET "/" [] (str "the new-dom: " (all-news-dom)))
   (POST "/" [news] (model/create news))
   (route/resources "/")
   (route/not-found "Not Found"))
