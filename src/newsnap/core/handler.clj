@@ -39,7 +39,7 @@
       
 
 (defroutes app-routes
-  (GET "/" [] (root news-form (all-news-dom)))
+  (GET "/" [] (root form-test (all-news-dom)))
   (POST "/" [news] (model/create news))
   (route/resources "/")
   (route/not-found "Not Found"))
