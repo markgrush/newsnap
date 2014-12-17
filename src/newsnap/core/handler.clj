@@ -40,7 +40,7 @@
       
 
 (defroutes app-routes
-  (GET "/" [] (root form-test (all-news-dom)))
+  (GET "/" [] (root form-test (all-news-dom) [:input {:type "submit" :value "submit" :class "btn"}]))
   (POST "/" [news] (model/create news))
   (route/resources "/")
   (route/not-found "Not Found"))
