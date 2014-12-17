@@ -2,6 +2,27 @@ body {
 	font-size: 100%;
 }
 
+.primary {
+	background: #03a9f4;
+	color: #ffffff;
+}
+
+.primary-dark {
+	background: #455ede;
+	color: #ffffff;
+}
+
+.primary-light {
+	background: #40c4ff;
+	color: #ffffff;
+}
+
+div.form {
+	vertical-align: middle;
+	border: 1px solid;
+	border-radius: 5px;
+}
+
 div.post {
     margin-top: 10px;
     margin: 0 auto;
@@ -33,23 +54,26 @@ p.post {
 	word-wrap: break-word;      /* IE */
 }
 
+textarea#title {
+	resize: none;
+    rows: 3;
+    cols: 50;
+}
+
 textarea#news {
 	resize: none;
-    rows: 5;
-    cols: 20;
+    rows: 15;
+    cols: 50;
 }
 
 .btn {
 	-webkit-border-radius: 5;
 	-moz-border-radius: 5;
 	border-radius: 5px;
-	border-style: none;
+	border-style: none; /* make button flat */
 	font-family: Arial;
-	color: #ffffff;
-	font-size: 20px;
- 	background: #3498db;
-  	padding: 8px 15px 8px 15px;
-  	text-decoration: none;
+	font-size: 1.2em;
+  	padding: 10px 15px 10px 15px;
 }
 
 .btn:hover {

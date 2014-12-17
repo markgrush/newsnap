@@ -14,10 +14,13 @@
 (def title "Newsnap")
 
 (def form-test
-  (form/form-to [:post "/"]
-                (form/label "news" "what's your news?")
+  [:div {:class "primary form"}
+     (form/form-to [:post "/"]
+                (form/label "title" "Title:")
+                (form/text-area "title")
+                (form/label "news" "News:")
                 (form/text-area "news")
-                [:input {:type "submit" :value "submit" :class "btn"}]))
+                [:input {:type "submit" :value "submit" :class "primary-light btn"}]))]
 
 (defn root [& body]
   (html5
@@ -40,7 +43,7 @@
       
 
 (defroutes app-routes
-  (GET "/" [] (root form-test (all-news-dom) [:input {:type "submit" :value "submit" :class "btn"}]))
+  (GET "/" [] (root form-test (all-news-dom)))
   (POST "/" [news] (model/create news))
   (route/resources "/")
   (route/not-found "Not Found"))
