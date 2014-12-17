@@ -77,7 +77,7 @@
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
-  (GET "/:id" [id] (root (news-post id)))
+  (GET "/:id" [id] (root form-test (news-post id)))
   (route/resources "/")
   (route/not-found "Not Found"))
 
