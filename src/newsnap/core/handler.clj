@@ -17,7 +17,7 @@
   (form/form-to [:post "/"]
                 (form/label "news" "what's your news?")
                 (form/text-area "news")
-                (form/submit-button "submit")))
+                [:input {:type "submit" :value "submit" :class "btn"}]))
 
 (defn root [& body]
   (html5

@@ -39,7 +39,7 @@ textarea#news {
     cols: 20;
 }
 
-button {
+.btn {
 	-webkit-border-radius: 5;
 	-moz-border-radius: 5;
 	border-radius: 5px;
@@ -51,7 +51,7 @@ button {
   	text-decoration: none;
 }
 
-button:hover {
+.btn:hover {
   background: #3cb0fd;
   text-decoration: none;
 }
