@@ -26,7 +26,7 @@
 (defn countdown [title news key]
   (Thread/sleep 10000)
   ;TODO: delete also from the table with the actual news post and replies
-  (sql/query spec [(str "delete * from news where title='" title "' and body='" news "' and countdownkey='" key "';")]))
+  (sql/query spec [(str "delete from news where title='" title "' and body='" news "' and countdownkey=" key ";")]))
 
 (defn create
   [name email title news]
