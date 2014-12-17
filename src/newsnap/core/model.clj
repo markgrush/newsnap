@@ -18,15 +18,43 @@
   []
   (into [] (sql/query spec ["select title from news order by id desc"])))
 
+(defn news-item
+  [id]
+  (sql/query spec [(str "select * from " id " order by id desc")]))
+
 ;special key to identify the news report when counting down its deletion timer
 (defn countdown-key
   []
-  (int (rand 90000000)))
+  (str "n" (int (rand 90000000))))
 
 (defn countdown [title news key]
-  (Thread/sleep 10000)
-  ;TODO: delete also from the table with the actual news post and replies
-  (sql/query spec [(str "delete from news where title='" title "' and body='" news "' and countdownkey=" key ";")]))
+  (Thread/sleep 6000000)
+  (sql/query spec [(str "delete from news where title='" title "' and body='" news "' and countdownkey=" key ";")])
+  (sql/query spec [(str "drop table " key)]))
+
+
+(defn exists?
+"Check whether a given table exists."
+  [db-spec table]
+  (try
+    (do
+      (->> (str "select 1 from " table)
+        (vector)
+        (sql/query db-spec))
+      true)
+    (catch Throwable ex
+      false)))
+
+(defn create-table [table-name]
+  "creates table with original news story and replies"
+  (sql/db-do-commands (sql/create-table-ddl spec (keyword table-name) 
+                                            [:id :serial "PRIMARY KEY"]
+                                            [:name :varchar "NOT NULL"]
+                                            [:email :varchar "NOT NULL"]
+                                            [:title :varchar "NOT NULL"]
+                                            [:body :varchar "NOT NULL"]
+                                            [:created_at :timestamp
+                                             "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"])))
 
 (defn create
   [name email title news]
@@ -35,5 +63,8 @@
           (not (clojure.string/blank? news)))
     (let [key (countdown-key)]
       (sql/insert! spec :news {:name name :email email :title title :body news :countdownkey key})
+      (when-not (exists? spec key)
+        (create-table key))
+      (sql/insert! spec (keyword key) {:name name :email email :title title :body news})
       (future (countdown title news key))))
   (ring/redirect "/"))
