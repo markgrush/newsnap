@@ -1,5 +1,6 @@
 body {
 	font-size: 100%;
+	font-family: Arial;
 }
 
 .primary {
@@ -18,9 +19,13 @@ body {
 }
 
 div.form {
-	vertical-align: middle;
+	position: relative;
 	border: 1px solid;
 	border-radius: 5px;
+}
+
+.in-form {
+	vertical-align: middle;
 }
 
 div.post {
@@ -77,6 +82,6 @@ textarea#news {
 }
 
 .btn:hover {
-  background: #3cb0fd;
+  background: #71d1de;
   text-decoration: none;
 }
