@@ -49,7 +49,7 @@ textarea#news {
  	background: #3498db;
   	padding: 8px 14px 8px 15px;
   	text-decoration: none;
-  	box-shadow: none;
+  	box-shadow: none !important;
 }
 
 .btn:hover {
