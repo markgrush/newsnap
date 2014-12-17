@@ -35,5 +35,5 @@
           (not (clojure.string/blank? news)))
     (let [key (countdown-key)]
       (sql/insert! spec :news {:name name :email email :title title :body news :countdownkey key})
-      (.start (Thread. (countdown title news key)))))
+      (future (countdown title news key))))
   (ring/redirect "/"))
