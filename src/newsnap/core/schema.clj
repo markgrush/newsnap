@@ -17,6 +17,7 @@
                         (sql/create-table-ddl
                          :news
                          [:id :serial "PRIMARY KEY"]
+                         [:countdownkey :int "NOT NULL"]
                          [:name :varchar "NOT NULL"]
                          [:email :varchar "NOT NULL"]
                          [:title :varchar "NOT NULL"]
