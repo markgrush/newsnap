@@ -79,6 +79,7 @@
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   (GET "/:id" [id] (root form-test (news-post id)))
   (GET "/botnim" [] (str "Exists? " (model/exists? "n2141343")))
+  (GET "/botnim2" [] (str "botnim botnim"))
   (route/resources "/")
   (route/not-found "Not Found"))
 
