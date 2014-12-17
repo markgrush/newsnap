@@ -16,10 +16,12 @@
 
 (defn all-news
   []
-  (into [] (sql/query spec ["select * from news order by id desc"])))
+  (into [] (sql/query spec ["select title from news order by id desc"])))
 
 (defn create
-  [post]
-  (when-not (clojure.string/blank? post)
-    (sql/insert! spec :news {:body post}))
+  [name email title news]
+  (when-not (and 
+              (clojure.string/blank? title)
+              (clojure.string/blank? news))
+    (sql/insert! spec :news {:name name :email email :title title :body news}))
   (ring/redirect "/"))

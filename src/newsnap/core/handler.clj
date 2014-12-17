@@ -16,11 +16,15 @@
 (def form-test
   [:div {:class "primary form"}
      (form/form-to [:post "/"]
-                [:div [:label {:for "title"} "Title:"]]
-                [:div [:textarea {:class "title" :id "title" :name "title"}]]
-                [:div [:label {:for "news"} "News:"]]
-                [:div [:textarea {:class "news" :id "news" :name "news"}]]
-                [:div [:input {:class "primary-light btn" :type "submit" :value "submit"}]])])
+                [:div [:label {:class "in-form" :for "op-name"} "Name:"]]
+                [:div [:input {:class "in-form" :type "text" :id "op-name" :name "op-name"}]]
+                [:div [:label {:class "in-form" :for "op-email"} "Email:"]]
+                [:div [:input {:class "in-form" :type "op-email" :id "op-email"}]]
+                [:div [:label {:class "in-form" :for "title"} "Title:"]]
+                [:div [:textarea {:class "in-form" :id "title" :name "title" :rows "1" :cols "50"}]]
+                [:div [:label {:class "in-form" :for "news"} "News:"]]
+                [:div [:textarea {:class "in-form" :id "news" :name "news" :rows "10" :cols "50"}]]
+                [:div [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}]])])
 
 (defn root [& body]
   (html5
@@ -39,12 +43,11 @@
 (defn all-news-dom
   []
   (let [news (model/all-news)]
-    (into [:div] (map #(news-form (escape-html (:body %))) news))))
+    (into [:ul] (map #(into [:li] (escape-html (:title %))) news))))
       
-
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
-  (POST "/" [news] (model/create news))
+  (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   (route/resources "/")
   (route/not-found "Not Found"))
 

@@ -17,6 +17,9 @@
                         (sql/create-table-ddl
                          :news
                          [:id :serial "PRIMARY KEY"]
+                         [:name :varchar "NOT NULL"]
+                         [:email :varchar "NOT NULL"]
+                         [:title :varchar "NOT NULL"]
                          [:body :varchar "NOT NULL"]
                          [:created_at :timestamp
                           "NOT NULL" "DEFAULT CURRENT_TIMESTAMP"]))
