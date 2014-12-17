@@ -20,7 +20,7 @@
                 (form/text-area "title")
                 (form/label "news" "News:")
                 (form/text-area "news")
-                [:input {:type "submit" :value "submit" :class "primary-light btn"}]))]
+                [:input {:type "submit" :value "submit" :class "primary-light btn"}])])
 
 (defn root [& body]
   (html5
