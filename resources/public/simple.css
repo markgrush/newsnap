@@ -65,6 +65,15 @@ textarea {
 	resize: none;
 }
 
+a {
+	font-size: 1.2em;
+	color: #031e8a;
+}
+
+a:hover {
+	color: #6181ff;
+}
+
 .btn {
 	-webkit-border-radius: 5;
 	-moz-border-radius: 5;

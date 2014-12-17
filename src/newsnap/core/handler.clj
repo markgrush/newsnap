@@ -26,7 +26,8 @@
                 [:div [:textarea {:class "in-form" :id "news" :name "news" :rows "10" :cols "50"}]]
                 [:div [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}]])])
 
-(defn root [& body]
+(defn root 
+  [& body]
   (html5
     [:html
      [:head
@@ -40,10 +41,17 @@
    [:p {:class "title"} "Breaking news: Peanuts peanut peanuts peanut!"]
    [:p {:class "post"} news-text]])
 
+(def news-list
+  [:ul {:class "news"}])
+
+(defn title-to-list
+  [query]
+  [:li [:a {:href "/"} (escape-html (:title query))]])
+
 (defn all-news-dom
   []
   (let [news (model/all-news)]
-    (into [:ul] (map #(into [:li] (escape-html (:title %))) news))))
+    (into news-list (map title-to-list news))))
       
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
