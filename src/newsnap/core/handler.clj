@@ -17,9 +17,9 @@
   [:div {:class "primary form"}
      (form/form-to [:post "/"]
                 [:label {:class "in-form" :for "title"} "Title:"]
-                [:text-area {:class "in-form" :id "title" :name "title"}]
+                [:text-area {:class "in-form title" :id "title" :name "title"}]
                 [:label {:class "in-form" :for "news"} "News:"]
-                [:text-area {:class "in-form" :id "news" :name "news"}]
+                [:text-area {:class "in-form news" :id "news" :name "news"}]
                 [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}])])
 
 (defn root [& body]

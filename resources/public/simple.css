@@ -25,7 +25,11 @@ div.form {
 }
 
 .in-form {
-	vertical-align: middle;
+	position: relative;
+  	top: 50%;
+  	-webkit-transform: translateY(-50%);
+  	-ms-transform: translateY(-50%);
+  	transform: translateY(-50%);
 }
 
 div.post {
@@ -59,13 +63,13 @@ p.post {
 	word-wrap: break-word;      /* IE */
 }
 
-textarea#title {
+textarea.title {
 	resize: none;
     rows: 3;
     cols: 50;
 }
 
-textarea#news {
+textarea.news {
 	resize: none;
     rows: 15;
     cols: 50;
