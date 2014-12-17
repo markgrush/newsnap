@@ -112,7 +112,7 @@ div.reply {
 }
 
 div.poster-info {
-	
+	padding: 10px 10px 10px 10px;
 }
 
 p.poster-name {
@@ -126,10 +126,10 @@ p.poster-email {
 }
 
 div.poster-body {
-	
+	padding: 10px 10px 10px 10px;
 }
 
 div.poster-other {
-	
+	padding: 10px 10px 10px 10px;
 }
 

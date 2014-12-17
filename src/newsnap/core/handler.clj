@@ -59,12 +59,12 @@
    [:div {:class "poster-info"}
     [:p {:class "poster-name"} (if (clojure.string/blank? (:name query))
                                  "Anonymous"
-                                 (:name query))]
+                                 (escape-html (:name query)))]
     [:p {:class "poster-email"} (if (clojure.string/blank? (:email query))
                                   "-"
-                                  (:email query))]]
+                                  (escape-html (:email query)))]]
    [:div {:class "poster-body"}
-    (:body query)]
+    (escape-html (:body query))]
    [:div {:class "poster-other"}
     ;TODO: quote info
     ]])
@@ -78,6 +78,7 @@
   (GET "/" [] (root form-test (all-news-dom)))
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   (GET "/:id" [id] (root form-test (news-post id)))
+  (GET "/botnim" [] (str "Exists? " (model/exists? "n2141343")))
   (route/resources "/")
   (route/not-found "Not Found"))
 
