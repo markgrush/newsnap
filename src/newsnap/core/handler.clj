@@ -19,7 +19,7 @@
                 [:div [:label {:class "in-form" :for "op-name"} "Name:"]]
                 [:div [:input {:class "in-form" :type "text" :id "op-name" :name "op-name"}]]
                 [:div [:label {:class "in-form" :for "op-email"} "Email:"]]
-                [:div [:input {:class "in-form" :type "op-email" :id "op-email"}]]
+                [:div [:input {:class "in-form" :type "op-email" :id "op-email" :name "op-email"}]]
                 [:div [:label {:class "in-form" :for "title"} "Title:"]]
                 [:div [:textarea {:class "in-form" :id "title" :name "title" :rows "1" :cols "50"}]]
                 [:div [:label {:class "in-form" :for "news"} "News:"]]
