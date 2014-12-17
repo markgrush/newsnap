@@ -16,11 +16,11 @@
 (def form-test
   [:div {:class "primary form"}
      (form/form-to [:post "/"]
-                [:div [:label {:class "in-form" :for "title"} "Title:"]]
-                [:div [:textarea {:class "in-form title" :id "title" :name "title"}]]
-                [:div [:label {:class "in-form" :for "news"} "News:"]]
-                [:div [:textarea {:class "in-form news" :id "news" :name "news"}]]
-                [:div [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}]])])
+                [:div [:label {:for "title"} "Title:"]]
+                [:div [:textarea {:class "title" :id "title" :name "title"}]]
+                [:div [:label {:for "news"} "News:"]]
+                [:div [:textarea {:class "news" :id "news" :name "news"}]]
+                [:div [:input {:class "primary-light btn" :type "submit" :value "submit"}]])])
 
 (defn root [& body]
   (html5
