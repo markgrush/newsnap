@@ -20,8 +20,8 @@
 
 (defn create
   [name email title news]
-  (when-not (and 
-              (clojure.string/blank? title)
-              (clojure.string/blank? news))
+  (when (and 
+          (not (clojure.string/blank? title))
+          (not (clojure.string/blank? news)))
     (sql/insert! spec :news {:name name :email email :title title :body news}))
   (ring/redirect "/"))
