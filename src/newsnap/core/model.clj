@@ -69,3 +69,9 @@
       (sql/insert! spec (keyword key) {:name name :email email :title title :body news})
       (future (countdown title news key))))
   (ring/redirect "/"))
+
+(defn create-reply
+  [table name email reply]
+  (when-not (clojure.string/blank? reply)
+    (sql/insert! spec (keyword table) {:name name :email email :body reply}))
+  (ring/redirect (ste "/" table)))

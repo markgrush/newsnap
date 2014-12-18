@@ -26,6 +26,18 @@
                 [:div [:textarea {:class "in-form" :id "news" :name "news" :rows "10" :cols "50"}]]
                 [:div [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}]])])
 
+(defn reply-form
+  [route]
+  [:div {:class "primary form"}
+   (form/form-to [:post route]
+                 [:div [:label {:class "in-form" :for "replier-name"} "Name:"]]
+                 [:div [:input {:class "in-form" :type "text" :id "replier-name" :name "replier-name"}]]
+                 [:div [:label {:class "in-form" :for "replier-email"} "Email:"]]
+                 [:div [:input {:class "in-form" :type "replier-email" :id "replier-email" :name "replier-email"}]]
+                 [:div [:label {:class "in-form" :for "reply"} "Reply:"]]
+                 [:div [:textarea {:class "in-form" :id "reply" :name "reply" :rows "10" :cols "50"}]]
+                 [:div [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}]])])
+
 (defn root 
   [& body]
   (html5
@@ -82,7 +94,8 @@
   ;next time MAKE SURE the :id thingy has a regular expression with it 
   ;what happened was that it was just :id and the server loads the css file as
   ;/cssfile.css and triggers this get which can cause problems.
-  (GET "/:id{n[0-9]+}" [id] (root (news-post id)))
+  (GET "/:id{n[0-9]+}" [id] (root (reply-form (str "/" id)) (news-post id)))
+  (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] (model/create-reply id replier-name replier-email reply))
   (route/resources "/")
   (route/not-found "Not Found"))
 
@@ -93,6 +106,6 @@
   (jetty/run-jetty app {:port port :join? false}))
 
 (defn -main []
-  (schema/migrate)
+  ;(schema/migrate)
   (let [port (Integer. (or (System/getenv "PORT") "5000"))]
     (start port)))
