@@ -46,6 +46,7 @@
       false)))
 
 (defn create-table [table-name]
+  [table-name]
   "creates table with original news story and replies"
   (sql/db-do-commands (sql/create-table-ddl spec (keyword table-name) 
                                             [:id :serial "PRIMARY KEY"]
