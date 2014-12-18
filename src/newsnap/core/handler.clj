@@ -74,7 +74,7 @@
 (defn news-post
   [id]
   (let [queries (model/news-item id)]
-    (into [:div {:class "news-item"}] (map news-reply queries))))
+    (into [:div {:class "news-item primary-light"}] (map news-reply queries))))
       
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
