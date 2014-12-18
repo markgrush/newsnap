@@ -74,10 +74,10 @@
 (defn news-post
   [id]
   (let [queries (model/news-item id)]
-    (into [:div {:class "news-item primary-light"}] (map news-reply queries))))
+    (into [:div {:class "news-item secondary-light"}] (map news-reply queries))))
       
 (defroutes app-routes
-  (GET "/" [] (root form-test (all-news-dom)))
+  (GET "/" [] (root form-test))
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   ;next time MAKE SURE the :id thingy has a regular expression with it 
   ;what happened was that it was just :id and the server loads the css file as
@@ -93,6 +93,6 @@
   (jetty/run-jetty app {:port port :join? false}))
 
 (defn -main []
-  (schema/migrate)
+ ; (schema/migrate)
   (let [port (Integer. (or (System/getenv "PORT") "5000"))]
     (start port)))

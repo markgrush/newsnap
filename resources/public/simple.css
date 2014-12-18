@@ -29,7 +29,10 @@ div.form {
 	padding: 5px 15px 5px 15px;
 	border: 1px solid;
 	border-radius: 5px;
-	display: inline-block;
+
+	/* center on page AND wrap */
+  	display: table;
+  	margin: auto;
 }
 
 .in-form {
@@ -52,7 +55,7 @@ p.title {
 	font-family: Arial;
 	/*
 	font-family: Consolas, monaco, monospace; */
-	font-size: 1.5em;
+	font-size: 1.6em;
 	font-style: bold;
 	text-align: center;
 	color: #004c80;
