@@ -28,8 +28,8 @@
   (str "n" (int (rand 90000000))))
 
 (defn countdown [title news key]
-  (Thread/sleep 6000000)
-  (sql/query spec [(str "delete from news where title='" title "' and body='" news "' and countdownkey=" key ";")])
+  (Thread/sleep 6000)
+  (sql/query spec [(str "delete from news where title='" title "' and body='" news "' and countdownkey=" key)])
   (sql/query spec [(str "drop table " key)]))
 
 
