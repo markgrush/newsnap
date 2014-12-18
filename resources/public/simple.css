@@ -18,7 +18,14 @@ body {
 	color: #ffffff;
 }
 
+.secondary-light {
+	background: #acd6ff;
+	color: #000000;
+}
+
 div.form {
+	margin: 0 auto;
+	overflow: auto;
 	padding: 5px 15px 5px 15px;
 	border: 1px solid;
 	border-radius: 5px;
@@ -42,11 +49,13 @@ div.post {
 }
 
 p.title {
-	font-family: Consolas, monaco, monospace;
+	font-family: Arial;
+	/*
+	font-family: Consolas, monaco, monospace; */
 	font-size: 1.5em;
 	font-style: bold;
 	text-align: center;
-	color: RoyalBlue;
+	color: #004c80;
 }
 
 p.post {
@@ -115,7 +124,7 @@ div.poster-info {
 p.poster-name {
 	font-size: 1.1em;
 	font-style: bold;
-	color: #455ede;
+	color: #6666ff;
 	display: inline-block;
 	margin-right: 15px;
 }
@@ -123,7 +132,7 @@ p.poster-name {
 p.poster-email {
 	font-size: 1.1em;
 	font-style: bold;
-	color: #615fde;
+	color: #9966ff;
 	display: inline-block; /* to position element horizontally */
 }
 

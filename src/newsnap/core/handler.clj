@@ -82,7 +82,7 @@
   ;next time MAKE SURE the :id thingy has a regular expression with it 
   ;what happened was that it was just :id and the server loads the css file as
   ;/cssfile.css and triggers this get which can cause problems.
-  (GET "/:id{n[0-9]+}" [id] (root form-test (news-post id)))
+  (GET "/:id{n[0-9]+}" [id] (root (news-post id)))
   (route/resources "/")
   (route/not-found "Not Found"))
 
