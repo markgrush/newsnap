@@ -48,7 +48,7 @@
 (defn create-table [table-name]
   "creates table with original news story and replies"
   [table-name]
-  (sql/db-do-commands (sql/create-table-ddl spec (keyword table-name) 
+  (sql/db-do-commands spec (sql/create-table-ddl (keyword table-name)
                                             [:id :serial "PRIMARY KEY"]
                                             [:name :varchar "NOT NULL"]
                                             [:email :varchar "NOT NULL"]
