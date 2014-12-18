@@ -18,8 +18,13 @@ body {
 	color: #ffffff;
 }
 
-.secondary-light {
+.secondary {
 	background: #acd6ff;
+	color: #000000;
+}
+
+.secondary-light {
+	background: #d6ebff;
 	color: #000000;
 }
 
@@ -119,6 +124,8 @@ div.reply {
 	padding: 10px 10px 10px 10px;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	border-radius: 5px;
+	border-style: none;
 }
 
 div.poster-info {

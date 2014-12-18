@@ -16,7 +16,7 @@
 
 (defn all-news
   []
-  (into [] (sql/query spec ["select * from news order by id desc"])))
+  (into [] (sql/query spec ["select * from news order by id asc"])))
 
 (defn news-item
   [id]

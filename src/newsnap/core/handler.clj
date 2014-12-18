@@ -67,7 +67,7 @@
 
 (defn news-reply
   [query]
-  [:div {:class "reply"}
+  [:div {:class "reply secondary-light"}
    [:div {:class "poster-info"}
     (when-not (clojure.string/blank? (:title query))
       [:p {:class "title"} (:title query)])
@@ -86,7 +86,7 @@
 (defn news-post
   [id]
   (let [queries (model/news-item id)]
-    (into [:div {:class "news-item secondary-light"}] (map news-reply queries))))
+    (into [:div {:class "news-item secondary"}] (map news-reply queries))))
       
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
