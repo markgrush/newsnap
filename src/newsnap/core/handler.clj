@@ -57,6 +57,8 @@
   [query]
   [:div {:class "reply"}
    [:div {:class "poster-info"}
+    (when-not (clojure.string/blank? (:title query))
+      [:p {:class "title"} (:title query)])
     [:p {:class "poster-name"} (if (clojure.string/blank? (:name query))
                                  "Anonymous"
                                  (escape-html (:name query)))]
