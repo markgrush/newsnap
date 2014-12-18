@@ -34,7 +34,7 @@
 
 
 (defn exists?
-"Check whether a given table exists."
+  "Check whether a given table exists."
   [db-spec table]
   (try
     (do
@@ -70,8 +70,14 @@
       (future (countdown title news key))))
   (ring/redirect "/"))
 
+(defn keywordize
+  [string]
+  (if (= (first "/") (first string))
+    (keyword (subs string 1))
+    (keyword string)))
+
 (defn create-reply
   [table name email reply]
   (when-not (clojure.string/blank? reply)
-    (sql/insert! spec (keyword table) {:name name :email email :body reply}))
+    (sql/insert! spec (keywordize table) {:name name :email email :body reply}))
   (ring/redirect (str "/" table)))
