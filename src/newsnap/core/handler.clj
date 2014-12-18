@@ -75,11 +75,12 @@
     (into [:div {:class "news-item"}] (map news-reply queries))))
       
 (defroutes app-routes
-  (GET "/" [] (root form-test (all-news-dom)))
+  (GET "/" [] (root form-test))
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
-  (GET "/:id" [id] (root form-test (news-post id)))
-  (GET "/botnim" [] (str "Exists? " (model/exists? "n2141343")))
-  (GET "/botnim2" [] (str "botnim botnim"))
+  ;next time MAKE SURE the :id thingy has a regular expression with it 
+  ;what happened was that it was just :id and the server loads the css file as
+  ;/cssfile.css and triggers this get which can cause problems.
+  (GET "/:id{n[0-9]+}" [id] (root form-test (news-post id)))
   (route/resources "/")
   (route/not-found "Not Found"))
 
@@ -90,6 +91,6 @@
   (jetty/run-jetty app {:port port :join? false}))
 
 (defn -main []
-  (schema/migrate)
+;  (schema/migrate)
   (let [port (Integer. (or (System/getenv "PORT") "5000"))]
     (start port)))
