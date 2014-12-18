@@ -74,4 +74,4 @@
   [table name email reply]
   (when-not (clojure.string/blank? reply)
     (sql/insert! spec (keyword table) {:name name :email email :body reply}))
-  (ring/redirect (ste "/" table)))
+  (ring/redirect (str "/" table)))
