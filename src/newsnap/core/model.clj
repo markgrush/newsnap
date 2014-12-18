@@ -79,5 +79,5 @@
 (defn create-reply
   [table name email reply]
   (when-not (clojure.string/blank? reply)
-    (sql/insert! spec (keywordize table) {:name name :email email :body reply}))
+    (sql/insert! spec (keywordize table) {:name name :email email :title "" :body reply}))
   (ring/redirect (str "/" table)))

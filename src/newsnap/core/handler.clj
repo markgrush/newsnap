@@ -106,6 +106,6 @@
   (jetty/run-jetty app {:port port :join? false}))
 
 (defn -main []
-  ;(schema/migrate)
+  (schema/migrate)
   (let [port (Integer. (or (System/getenv "PORT") "5000"))]
     (start port)))
