@@ -74,9 +74,8 @@
     [:p {:class "poster-name"} (if (clojure.string/blank? (:name query))
                                  "Anonymous"
                                  (escape-html (:name query)))]
-    [:p {:class "poster-email"} (if (clojure.string/blank? (:email query))
-                                  "-"
-                                  (escape-html (:email query)))]]
+    (when-not (clojure.string/blank? (:email query))
+      [:p {:class "poster-email"} (escape-html (:email query))])]
    [:div {:class "poster-body"}
     (escape-html (:body query))]
    [:div {:class "poster-other"}

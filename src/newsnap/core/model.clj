@@ -16,11 +16,11 @@
 
 (defn all-news
   []
-  (into [] (sql/query spec ["select * from news order by id asc"])))
+  (into [] (sql/query spec ["select * from news order by id desc"])))
 
 (defn news-item
   [id]
-  (sql/query spec [(str "select * from " id " order by id desc")]))
+  (sql/query spec [(str "select * from " id " order by id asc")]))
 
 ;special key to identify the news report when counting down its deletion timer
 (defn countdown-key
