@@ -31,8 +31,6 @@ div.form {
 }
 
 div.post {
-	margin: 0 auto;
-    margin-top: 10px;
     margin: 0 auto;
 	padding: 0.5px 0.5px 0.5px 0.5px;
 	max-width: 650px;
