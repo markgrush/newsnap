@@ -14,6 +14,7 @@
 (def title "Newsnap")
 
 (defn form-test
+  []
   [:div {:class "primary form"}
      (form/form-to [:post "/new"]
                    ;; MUST add this func to each form to prevent 
