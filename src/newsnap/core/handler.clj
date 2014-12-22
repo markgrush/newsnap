@@ -98,14 +98,14 @@
   (route/not-found "Not Found"))
 
 (def app
+  ;; since compojure.handler wrappers are deprecated, we're using 
+  ;; ring-defaults wrappers instead.
   (-> app-routes
-    ;; since compojure.handler wrappers are deprecated, we're using 
-    ;; ring-defaults wrappers instead.
-    (wrap-defaults site-defaults)
     ;; this part is important (according to ring-defaults doc) 
     ;; when "app is sitting behind a load balancer or reverse proxy, 
     ;; as is often the case in cloud-based deployments"
-    (assoc :proxy true)))
+    (wrap-defaults (assoc site-defaults :proxy true))))
+    
 
 (defn start [port]
   (jetty/run-jetty app {:port port :join? false}))
