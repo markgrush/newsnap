@@ -1,10 +1,8 @@
 (ns newsnap.core.handler
   (:require [compojure.core :refer :all]
-            [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
-            [ring.middleware.params :refer [wrap-params]]
-            [ring.middleware.defaults :refer [site-defaults]]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [hiccup.form :as form]
             [hiccup.page :refer [html5 include-css]]
             [hiccup.util :refer [escape-html]]
@@ -103,7 +101,7 @@
   (-> app-routes
     ;; since compojure.handler wrappers are deprecated, we're using 
     ;; ring-defaults wrappers instead.
-    (site-defaults)
+    (wrap-defaults site-defaults)
     ;; this part is important (according to ring-defaults doc) 
     ;; when "app is sitting behind a load balancer or reverse proxy, 
     ;; as is often the case in cloud-based deployments"
