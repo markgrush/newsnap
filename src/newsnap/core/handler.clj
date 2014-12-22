@@ -4,6 +4,7 @@
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.defaults :refer [site-defaults]]
             [hiccup.form :as form]
             [hiccup.page :refer [html5 include-css]]
             [hiccup.util :refer [escape-html]]
@@ -90,16 +91,23 @@
 (defroutes app-routes
   (GET "/" [] (root form-test (all-news-dom)))
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
-  ;next time MAKE SURE the :id thingy has a regular expression with it 
-  ;what happened was that it was just :id and the server loads the css file as
-  ;/cssfile.css and triggers this get which can cause problems.
+  ;; next time MAKE SURE the :id thingy has a regular expression with it 
+  ;; what happened was that it was just :id and the server loads the css file as
+  ;; /cssfile.css and triggers this get which can cause problems.
   (GET "/:id{n[0-9]+}" [id] (root (reply-form (str "/" id)) (news-post id)))
   (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] (model/create-reply id replier-name replier-email reply))
   (route/resources "/")
   (route/not-found "Not Found"))
 
 (def app
-  (handler/site app-routes))
+  (-> app-routes
+    ;; since compojure.handler wrappers are deprecated, we're using 
+    ;; ring-defaults wrappers instead.
+    (site-defaults)
+    ;; this part is important (according to ring-defaults doc) 
+    ;; when "app is sitting behind a load balancer or reverse proxy, 
+    ;; as is often the case in cloud-based deployments"
+    (assoc :proxy true)))
 
 (defn start [port]
   (jetty/run-jetty app {:port port :join? false}))
