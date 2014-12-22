@@ -13,7 +13,7 @@
 
 (def title "Newsnap")
 
-(def form-test
+(defn form-test
   [:div {:class "primary form"}
      (form/form-to [:post "/new"]
                    ;; MUST add this func to each form to prevent 
@@ -97,7 +97,7 @@
     (into [:div {:class "news-item secondary"}] (map news-reply queries))))
       
 (defroutes app-routes
-  (GET "/" [] (root form-test (all-news-dom)))
+  (GET "/" [] (root (form-test) (all-news-dom)))
   (POST "/new" [op-name op-email title news] (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
