@@ -16,7 +16,7 @@
 (defn form-test
   []
   [:div {:class "primary form"}
-     (form/form-to [:post "/new"]
+     (form/form-to [:post "/"]
                    ;; MUST add this func to each form to prevent 
                    ;; "Invalid anti-forgery token" message since the 
                    ;; ring-defaults site-defaults wrappers has a 
@@ -99,7 +99,7 @@
       
 (defroutes app-routes
   (GET "/" [] (root (form-test) (all-news-dom)))
-  (POST "/new" [op-name op-email title news] (model/create op-name op-email title news))
+  (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
   ;; /cssfile.css and triggers this get which can cause problems.
