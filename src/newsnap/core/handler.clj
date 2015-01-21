@@ -8,7 +8,9 @@
             [hiccup.page :refer [html5 include-css]]
             [hiccup.util :refer [escape-html]]
             [newsnap.core.model :as model]
-            [newsnap.core.schema :as schema])
+            [newsnap.core.schema :as schema]
+            [liberator.core :refer [defresource]]
+            [clojure.data.json :as json])
   (:gen-class))
 
 (def title "Newsnap")
@@ -96,6 +98,18 @@
   [id]
   (let [queries (model/news-item id)]
     (into [:div {:class "news-item secondary"}] (map news-reply queries))))
+
+
+(defresource thread-resource
+  [thread]
+  :available-media-types ["text/html" "application/json"]
+  :handle-ok (fn [ctx] 
+               (let [content-type (get-in ctx [:representation :media-type])]
+                     (condp = content-type
+                       "text/html" (root (reply-form (str "/" id)) (news-post id))
+                       "application/json" (json/write-str (model/news-item thread))
+                       {:message "You requested a media type"
+                        :media-type content-type}))))
       
 (defroutes app-routes
   (GET "/" [] (root (form-test) (all-news-dom)))
@@ -103,7 +117,7 @@
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
   ;; /cssfile.css and triggers this get which can cause problems.
-  (GET "/:id{n[0-9]+}" [id] (root (reply-form (str "/" id)) (news-post id)))
+  (GET "/:id{n[0-9]+}" [id] (thread-resource id))
   (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] (model/create-reply id replier-name replier-email reply))
   (route/resources "/")
   (route/not-found "Not Found"))
