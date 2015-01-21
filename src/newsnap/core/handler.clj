@@ -102,14 +102,16 @@
 
 (defresource thread-resource
   [thread]
-  :available-media-types ["text/html" "application/json"]
-  :handle-ok (fn [ctx] 
-               (let [content-type (get-in ctx [:representation :media-type])]
-                     (condp = content-type
-                       "text/html" (root (reply-form (str "/" id)) (news-post id))
-                       "application/json" (json/write-str (model/news-item thread))
-                       {:message "You requested a media type"
-                        :media-type content-type}))))
+  :available-media-types 
+  ["text/html" "application/json"]
+  :handle-ok 
+  (fn [ctx] 
+    (let [content-type (get-in ctx [:representation :media-type])]
+      (condp = content-type
+        "text/html" (root (reply-form (str "/" thread)) (news-post thread))
+        "application/json" (json/write-str (model/news-item thread))
+        {:message "You requested a media type"
+         :media-type content-type}))))
       
 (defroutes app-routes
   (GET "/" [] (root (form-test) (all-news-dom)))
