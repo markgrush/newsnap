@@ -109,7 +109,7 @@
     (let [content-type (get-in ctx [:representation :media-type])]
       (condp = content-type
         "text/html" (root (reply-form (str "/" thread)) (news-post thread))
-        "application/json" (json/write-str (into [] (model/news-item thread)))
+        "application/json" (json/write-str (first (model/news-item thread)))
         {:message "You requested a media type"
          :media-type content-type}))))
       
