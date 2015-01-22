@@ -99,6 +99,10 @@
   (let [queries (model/news-item id)]
     (into [:div {:class "news-item secondary"}] (map news-reply queries))))
 
+(extend-type org.postgresql.jdbc4.Jdbc4Array
+  json/JSONWriter
+  (-write [o out]
+    (json/-write (.getArray o) out)))
 
 (defresource thread-resource
   [thread]
@@ -108,9 +112,8 @@
   (fn [ctx] 
     (let [content-type (get-in ctx [:representation :media-type])]
       (condp = content-type
-        "text/plain" (str (first (model/news-item thread)))
         "text/html" (root (reply-form (str "/" thread)) (news-post thread))
-        "application/json" (json/write-str (first (model/news-item thread)))
+        "application/json" (model/news-item-json thread))
         {:message "You requested a media type"
          :media-type content-type}))))
       

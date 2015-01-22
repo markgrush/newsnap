@@ -1,6 +1,7 @@
 (ns newsnap.core.model
   (:require [clojure.java.jdbc :as sql]
-            [ring.util.response :as ring]))
+            [ring.util.response :as ring]
+            [clojure.data.json :as json]))
 
 ; relative path of db url file
 (def postgresql-url-file "postgresql_url.txt")
@@ -14,6 +15,15 @@
 (def spec (or (System/getenv "DATABASE_URL")
               (get-postgres-url)))
 
+;; problem - jdbc query returns a jdbc4array type that cannot be translated
+;; to json as is. work arounds are awkward:
+;; http://stackoverflow.com/questions/19103870/jsonify-a-jdbc4array-in-clojure
+
+(extend-type org.postgresql.jdbc4.Jdbc4Array
+  json/JSONWriter
+  (-write [o out]
+    (json/-write (.getArray o) out)))
+
 (defn all-news
   []
   (into [] (sql/query spec ["select * from news order by id desc"])))
@@ -21,6 +31,13 @@
 (defn news-item
   [id]
   (sql/query spec [(str "select * from " id " order by id asc")]))
+
+(defn news-item-json
+  [id]
+  (with-open [conn (sql/get-connection spec)]
+    (json/write-str
+      (sql/query {:connection conn}
+                  [(str "select * from " id " order by id asc")]))))
 
 ;special key to identify the news report when counting down its deletion timer
 (defn countdown-key

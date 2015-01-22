@@ -12,7 +12,8 @@
 (defn migrate 
   []
   (when (not (migrated?))
-    (print "Creating database structure...") (flush)
+    (print "Creating database structure...") 
+    (flush)
     (sql/db-do-commands model/spec
                         (sql/create-table-ddl
                          :news
