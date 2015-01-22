@@ -19,10 +19,6 @@
 ;; to json as is. work arounds are awkward:
 ;; http://stackoverflow.com/questions/19103870/jsonify-a-jdbc4array-in-clojure
 
-(extend-type org.postgresql.jdbc4.Jdbc4Array
-  json/JSONWriter
-  (-write [o out]
-    (json/-write (.getArray o) out)))
 
 (defn all-news
   []
@@ -31,13 +27,6 @@
 (defn news-item
   [id]
   (sql/query spec [(str "select * from " id " order by id asc")]))
-
-(defn news-item-json
-  [id]
-  (with-open [conn (sql/get-connection spec)]
-    (json/write-str
-      (sql/query {:connection conn}
-                  [(str "select * from " id " order by id asc")]))))
 
 ;special key to identify the news report when counting down its deletion timer
 (defn countdown-key
