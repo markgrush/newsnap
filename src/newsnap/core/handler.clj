@@ -116,7 +116,7 @@
                                        :name (:name %)
                                        :email (:email %)
                                        :body (:body %)}) 
-                                 (model/news-item thread))))
+                                 (model/news-item "n9499410"))))
         {:message "You requested a media type"
          :media-type content-type}))))
       
