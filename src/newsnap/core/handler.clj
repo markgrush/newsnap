@@ -112,11 +112,11 @@
         "application/json" (json/write-str 
                              (into 
                                [] 
-                               (map #({:title (:title %)
-                                       :name (:name %)
-                                       :email (:email %)
-                                       :body (:body %)}) 
-                                 (model/news-item "n9499410"))))
+                               (map (fn [query] {:title (:title query)
+                                       :name (:name query)
+                                       :email (:email query)
+                                       :body (:body query)})
+                                 (model/news-item thread))))
         {:message "You requested a media type"
          :media-type content-type}))))
       

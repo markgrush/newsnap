@@ -13,7 +13,10 @@
     (second)))
 
 (def spec (or (System/getenv "DATABASE_URL")
-              (get-postgres-url)))
+              {:subprotocol "postgresql"
+               :subname "//localhost:5432/"
+               :user "postgres"
+               :password "50botnim4me"}))
 
 ;; problem - jdbc query returns a jdbc4array type that cannot be translated
 ;; to json as is. work arounds are awkward:
