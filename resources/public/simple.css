@@ -98,10 +98,11 @@ a:hover {
 	font-family: Arial;
 	font-size: 1.2em;
   	padding: 10px 15px 10px 15px;
+  	background: #ff7b40;
 }
 
 .btn:hover {
-  background: #71d1de;
+  background: #ff580d;
   text-decoration: none;
 }
 

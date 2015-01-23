@@ -56,6 +56,7 @@
     [:html
      [:head
       (include-css "simple.css")
+      [:img {:src "logo/newsnaplogo.png"}]
       [:title title]]
      [:body body]]))
 
