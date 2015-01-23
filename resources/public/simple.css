@@ -153,3 +153,7 @@ div.poster-body {
 div.poster-other {
 }
 
+tr:hover {
+	background: #c4ff40;
+}
+

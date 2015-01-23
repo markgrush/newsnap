@@ -73,6 +73,23 @@
   [query]
   [:li [:a {:href (str "/" (:countdownkey query))} (escape-html (:title query))]])
 
+;; ----------------------------------------------
+;; TABLE TITLES
+
+(defn title-to-row
+  [query]
+  [:tr 
+   [:td {:width "80%"} [:a {:href (str "/" (:countdownkey query))} (escape-html (:title query))]]
+   [:td [:img {:src "images/funny.png"}]]
+   [:td [:img {:src "images/shitty.png"}]]])
+
+(defn all-news-table
+  []
+  (let [news (model/all-news)]
+    (into [:table {:style "width:100%"}] (map title-to-row news))))
+
+;; ----------------------------------------------
+
 (defn all-news-dom
   []
   (let [news (model/all-news)]
@@ -83,7 +100,7 @@
   [:div {:class "reply secondary-light"}
    [:div {:class "poster-info"}
     (when-not (clojure.string/blank? (:title query))
-      [:p {:class "title"} (:title query)])
+      [:p {:class "title"} (escape-html (:title query))])
     [:p {:class "poster-name"} (if (clojure.string/blank? (:name query))
                                  "Anonymous"
                                  (escape-html (:name query)))]
@@ -122,7 +139,7 @@
          :media-type content-type}))))
       
 (defroutes app-routes
-  (GET "/" [] (root (form-test) (all-news-dom)))
+  (GET "/" [] (root (form-test) (all-news-table)))
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
