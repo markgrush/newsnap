@@ -117,6 +117,27 @@
   (let [queries (model/news-item id)]
     (into [:div {:class "news-item secondary"}] (map news-reply queries))))
 
+(defresource all-threads-resource
+  :available-media-types
+  ["text/html" "application/json"]
+  :handle-ok
+  (fn [ctx]
+    (let [content-type (get-in ctx [:representation :media-type])]
+      (condp = content-type
+        "text/html" (root (form-test) (all-news-table))
+        "application/json" (json/write-str
+                             (into
+                               []
+                               (map (fn [query] 
+                                      {:threadId (:countdownkey query)
+                                       :createdAt (:created_at query)
+                                       :title (:title query)
+                                       :name (:name query)
+                                       :email (:email query)})
+                                    (model/all-news))))
+        {:message "You requested a media type"
+         :media-type content-type}))))
+
 (defresource thread-resource
   [thread]
   :available-media-types 
@@ -139,7 +160,7 @@
          :media-type content-type}))))
       
 (defroutes app-routes
-  (GET "/" [] (root (form-test) (all-news-table)))
+  (GET "/" [] (all-threads-resource)
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
