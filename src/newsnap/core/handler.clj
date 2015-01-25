@@ -160,7 +160,7 @@
          :media-type content-type}))))
       
 (defroutes app-routes
-  (GET "/" [] (all-threads-resource)
+  (GET "/" [] (all-threads-resource))
   (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
@@ -168,7 +168,7 @@
   (GET "/:id{n[0-9]+}" [id] (thread-resource id))
   (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] (model/create-reply id replier-name replier-email reply))
   (route/resources "/")
-  (route/not-found "Not Found")))
+  (route/not-found "Not Found"))
 
 (def app
   ;; since compojure.handler wrappers are deprecated, we're using 
