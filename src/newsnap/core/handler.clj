@@ -168,7 +168,7 @@
   (GET "/:id{n[0-9]+}" [id] (thread-resource id))
   (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] (model/create-reply id replier-name replier-email reply))
   (route/resources "/")
-  (route/not-found "Not Found"))
+  (route/not-found "Not Found")))
 
 (def app
   ;; since compojure.handler wrappers are deprecated, we're using 
