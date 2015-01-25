@@ -117,6 +117,13 @@
   (let [queries (model/news-item id)]
     (into [:div {:class "news-item secondary"}] (map news-reply queries))))
 
+;; convert java.sql.Timestamp to string. Happens only if key is createdAt
+;; which should have a timestamp value from database.
+(defn timestamp-to-string [key val]
+  (if (= key :createdAt)
+    (.toString val)
+    val))
+
 (defresource all-threads-resource
   :available-media-types
   ["text/html" "application/json"]
@@ -134,7 +141,13 @@
                                        :title (:title query)
                                        :name (:name query)
                                        :email (:email query)})
-                                    (model/all-news))))
+                                    (model/all-news)))
+                             ;; value-fn : takes function that accepts
+                             ;; key and value and returns processed value.
+                             ;; used to convert complex data structures
+                             ;; to ones that can be jsonified. In this case
+                             ;; we convert java.sql.Timestamp to plain string.
+                             :value-fn timestamp-to-string)
         {:message "You requested a media type"
          :media-type content-type}))))
 
