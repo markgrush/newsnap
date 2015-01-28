@@ -3,28 +3,47 @@ body {
 	font-family: Arial;
 }
 
+div.logo {
+	padding: 0.4cm;
+	font-size: 18px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+p.logo {
+	font-size: 5.2em;
+	font-family: 'Tahoma';
+	font-style: bold;
+	text-align: center;
+}
+
+.subtitle {
+	font-size: 1.6em;
+	font-family: "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream Vera Sans Mono", monospace;
+}
+
 .primary {
 	background: #03a9f4;
 	color: #ffffff;
 }
 
 .primary-dark {
-	background: #455ede;
+	background: #0288d1;
 	color: #ffffff;
 }
 
 .primary-light {
-	background: #40c4ff;
+	background: #b3e5fc;
 	color: #ffffff;
 }
 
 .secondary {
-	background: #acd6ff;
+	background: #ff9100;
 	color: #000000;
 }
 
 .secondary-light {
-	background: #d6ebff;
+	background: #ffd180;
 	color: #000000;
 }
 
@@ -148,9 +167,19 @@ p.poster-email {
 }
 
 div.poster-body {
+	color: #000000;
 }
 
 div.poster-other {
+}
+
+table {
+	border-spacing: 0; /* Removes the cell spacing via CSS */
+	border-collapse: collapse; /* if you don't want to have double border where cells touch */
+}
+
+td {
+	border: 1px solid grey; 
 }
 
 tr:hover {
