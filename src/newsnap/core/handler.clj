@@ -56,7 +56,10 @@
     [:html
      [:head
       (include-css "simple.css")
-      [:img {:src "logo/newsnaplogo.png"}]
+   ;;   [:img {:src "logo/newsnaplogo.png"}]
+      [:div {:class "primary logo"}
+       [:p {:class "logo"} "Newsnap"]
+       [:p {:class "subtitle"} "Share Your News."]]
       [:title title]]
      [:body body]]))
 
@@ -78,10 +81,10 @@
 
 (defn title-to-row
   [query]
-  [:tr 
+  [:tr {:class "primary-light"}
    [:td {:width "80%"} [:a {:href (str "/" (:countdownkey query))} (escape-html (:title query))]]
-   [:td [:img {:src "images/funny.png"}]]
-   [:td [:img {:src "images/shitty.png"}]]])
+   [:td [:img {:src "images/like.png" :align "center"}]]
+   [:td [:img {:src "images/dislike.png" :align "center"}]]])
 
 (defn all-news-table
   []
@@ -97,7 +100,7 @@
 
 (defn news-reply
   [query]
-  [:div {:class "reply secondary-light"}
+  [:div {:class "reply primary-light"}
    [:div {:class "poster-info"}
     (when-not (clojure.string/blank? (:title query))
       [:p {:class "title"} (escape-html (:title query))])
@@ -115,7 +118,7 @@
 (defn news-post
   [id]
   (let [queries (model/news-item id)]
-    (into [:div {:class "news-item secondary"}] (map news-reply queries))))
+    (into [:div {:class "news-item primary"}] (map news-reply queries))))
 
 ;; convert java.sql.Timestamp to string. Happens only if key is createdAt
 ;; which should have a timestamp value from database.
