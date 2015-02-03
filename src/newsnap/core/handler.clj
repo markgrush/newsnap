@@ -15,8 +15,7 @@
 
 (def title "Newsnap")
 
-(defn form-test
-  []
+(def new-thread-form
   [:div {:class "primary form"}
      (form/form-to [:post "/"]
                    ;; MUST add this func to each form to prevent 
@@ -134,7 +133,7 @@
   (fn [ctx]
     (let [content-type (get-in ctx [:representation :media-type])]
       (condp = content-type
-        "text/html" (root (form-test) (all-news-table))
+        "text/html" (root new-thread-form (all-news-table))
         "application/json" (json/write-str
                              (into
                                []
