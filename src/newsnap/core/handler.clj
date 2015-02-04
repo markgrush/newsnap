@@ -10,114 +10,10 @@
             [newsnap.core.model :as model]
             [newsnap.core.schema :as schema]
             [liberator.core :refer [defresource]]
-            [clojure.data.json :as json])
+            [clojure.data.json :as json]
+            
+            [newsnap.view.pages :refer [main-page thread-page]])
   (:gen-class))
-
-(def title "Newsnap")
-
-(def new-thread-form
-  [:div {:class "primary form"}
-     (form/form-to [:post "/"]
-                   ;; MUST add this func to each form to prevent 
-                   ;; "Invalid anti-forgery token" message since the 
-                   ;; ring-defaults site-defaults wrappers has a 
-                   ;; anti-forgery wrapper. read more here:
-                   ;; https://github.com/ring-clojure/ring-anti-forgery
-                   ;; good explanation for what's a CSRF attack:
-                   ;; http://www.lispcast.com/clojure-web-security
-                   (anti-forgery-field)
-                   [:div [:label {:class "in-form" :for "op-name"} "Name:"]]
-                   [:div [:input {:class "in-form" :type "text" :id "op-name" :name "op-name"}]]
-                   [:div [:label {:class "in-form" :for "op-email"} "Email:"]]
-                   [:div [:input {:class "in-form" :type "op-email" :id "op-email" :name "op-email"}]]
-                   [:div [:label {:class "in-form" :for "title"} "Title:"]]
-                   [:div [:textarea {:class "in-form" :id "title" :name "title" :rows "1" :cols "50"}]]
-                   [:div [:label {:class "in-form" :for "news"} "News:"]]
-                   [:div [:textarea {:class "in-form" :id "news" :name "news" :rows "10" :cols "50"}]]
-                   [:div [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}]])])
-
-(defn reply-form
-  [route]
-  [:div {:class "primary form"}
-   (form/form-to [:post route]
-                 (anti-forgery-field)
-                 [:div [:label {:class "in-form" :for "replier-name"} "Name:"]]
-                 [:div [:input {:class "in-form" :type "text" :id "replier-name" :name "replier-name"}]]
-                 [:div [:label {:class "in-form" :for "replier-email"} "Email:"]]
-                 [:div [:input {:class "in-form" :type "replier-email" :id "replier-email" :name "replier-email"}]]
-                 [:div [:label {:class "in-form" :for "reply"} "Reply:"]]
-                 [:div [:textarea {:class "in-form" :id "reply" :name "reply" :rows "10" :cols "50"}]]
-                 [:div [:input {:class "in-form primary-light btn" :type "submit" :value "submit"}]])])
-
-(defn root 
-  [& body]
-  (html5
-    [:html
-     [:head
-      (include-css "simple.css")
-   ;;   [:img {:src "logo/newsnaplogo.png"}]
-      [:div {:class "primary logo"}
-       [:p {:class "logo"} "Newsnap"]
-       [:p {:class "subtitle"} "Share Your News."]]
-      [:title title]]
-     [:body body]]))
-
-(defn news-form
-  [news-text]
-  [:div {:class "post"}
-   [:p {:class "title"} "Breaking news: Peanuts peanut peanuts peanut!"]
-   [:p {:class "post"} news-text]])
-
-(def news-list
-  [:ul {:class "news"}])
-
-(defn title-to-list
-  [query]
-  [:li [:a {:href (str "/" (:countdownkey query))} (escape-html (:title query))]])
-
-;; ----------------------------------------------
-;; TABLE TITLES
-
-(defn title-to-row
-  [query]
-  [:tr {:class "primary-light"}
-   [:td {:width "80%"} [:a {:href (str "/" (:countdownkey query))} (escape-html (:title query))]]
-   [:td [:img {:src "images/like.png" :align "center"}]]
-   [:td [:img {:src "images/dislike.png" :align "center"}]]])
-
-(defn all-news-table
-  []
-  (let [news (model/all-news)]
-    (into [:table {:style "width:100%"}] (map title-to-row news))))
-
-;; ----------------------------------------------
-
-(defn all-news-dom
-  []
-  (let [news (model/all-news)]
-    (into news-list (map title-to-list news))))
-
-(defn news-reply
-  [query]
-  [:div {:class "reply primary-light"}
-   [:div {:class "poster-info"}
-    (when-not (clojure.string/blank? (:title query))
-      [:p {:class "title"} (escape-html (:title query))])
-    [:p {:class "poster-name"} (if (clojure.string/blank? (:name query))
-                                 "Anonymous"
-                                 (escape-html (:name query)))]
-    (when-not (clojure.string/blank? (:email query))
-      [:p {:class "poster-email"} (escape-html (:email query))])]
-   [:div {:class "poster-body"}
-    (escape-html (:body query))]
-   [:div {:class "poster-other"}
-    ;TODO: quote info
-    ]])
-
-(defn news-post
-  [id]
-  (let [queries (model/news-item id)]
-    (into [:div {:class "news-item primary"}] (map news-reply queries))))
 
 ;; convert java.sql.Timestamp to string. Happens only if key is createdAt
 ;; which should have a timestamp value from database.
@@ -133,7 +29,7 @@
   (fn [ctx]
     (let [content-type (get-in ctx [:representation :media-type])]
       (condp = content-type
-        "text/html" (root new-thread-form (all-news-table))
+        "text/html" main-page
         "application/json" (json/write-str
                              (into
                                []
@@ -161,7 +57,7 @@
   (fn [ctx] 
     (let [content-type (get-in ctx [:representation :media-type])]
       (condp = content-type
-        "text/html" (root (reply-form (str "/" thread)) (news-post thread))
+        "text/html" (thread-page thread)
         ;; this is awkward.. but good enough for now
         "application/json" (json/write-str 
                              (into 
