@@ -62,11 +62,14 @@
         "application/json" (json/write-str 
                              (into 
                                [] 
-                               (map (fn [query] {:title (:title query)
+                               (map (fn [query] 
+                                      {:title (:title query)
+                                       :createdAt (:created_at query)
                                        :name (:name query)
                                        :email (:email query)
                                        :body (:body query)})
-                                 (model/news-item thread))))
+                                 (model/news-item thread)))
+                             :value-fn timestamp-to-string))
         {:message "You requested a media type"
          :media-type content-type}))))
       
