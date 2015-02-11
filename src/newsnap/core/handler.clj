@@ -69,9 +69,9 @@
                                        :email (:email query)
                                        :body (:body query)})
                                  (model/news-item thread)))
-                             :value-fn timestamp-to-string))
+                             :value-fn timestamp-to-string)
         {:message "You requested a media type"
-         :media-type content-type}))))
+         :media-type content-type})))))
       
 (defroutes app-routes
   (GET "/" [] all-threads-resource)
