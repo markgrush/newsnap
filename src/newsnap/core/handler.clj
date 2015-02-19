@@ -79,15 +79,20 @@
   (GET "/:id{n[0-9]+}" [id] (thread-resource id))
   (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] 
         (model/create-reply id replier-name replier-email reply))
-  (route/resources "/")
-  (route/not-found "Not Found"))
+  (route/resources "/"))
 
 ;; routes for mobile - wrapped without browser specific middleware
 (defroutes mobile-routes
+  (GET "/test" _ "HELLO THIS IS TEST")
   (POST "/mobile/" [op-name op-email title news] 
         (model/create op-name op-email title news))
   (POST "/mobile/:id{n[0-9]+}" [id replier-name replier-email reply] 
-        (model/create-reply id replier-name replier-email reply))
+        (model/create-reply id replier-name replier-email reply)))
+
+;; when combining multiple routes, we must make sure the "route/not-found"
+;; is in a separate route and placed at the end of all other routes
+;; when combining them below.
+(defroutes not-found-route
   (route/not-found "Not Found"))
 
 (def app
@@ -103,9 +108,10 @@
   ;; middleware, so we use that function to prevent it.
   (routes
     (-> mobile-routes
-      (wrap-routes (assoc api-defaults :proxy true)))
+      (wrap-defaults (assoc api-defaults :proxy true)))
     (-> app-routes
-      (wrap-routes (assoc site-defaults :proxy true)))))
+      (wrap-defaults (assoc site-defaults :proxy true)))
+    not-found-route))
 
 (defn start [port]
   (jetty/run-jetty app {:port port :join? false}))
