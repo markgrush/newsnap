@@ -2,7 +2,7 @@
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
-            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.form :as form]
             [hiccup.page :refer [html5 include-css]]
@@ -75,23 +75,41 @@
       
 (defroutes app-routes
   (GET "/" [] all-threads-resource)
-  (POST "/" [op-name op-email title news] (model/create op-name op-email title news))
+  (POST "/" [op-name op-email title news] 
+        (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
   ;; /cssfile.css and triggers this get which can cause problems.
   (GET "/:id{n[0-9]+}" [id] (thread-resource id))
-  (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] (model/create-reply id replier-name replier-email reply))
+  (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] 
+        (model/create-reply id replier-name replier-email reply))
   (route/resources "/")
+  (route/not-found "Not Found"))
+
+;; routes for mobile - wrapped without browser specific middleware
+(defroutes mobile-routes
+  (POST "/mobile/" [op-name op-email title news] 
+        (model/create op-name op-email title news))
+  (POST "/mobile/:id{n[0-9]+}" [id replier-name replier-email reply] 
+        (model/create-reply id replier-name replier-email reply))
   (route/not-found "Not Found"))
 
 (def app
   ;; since compojure.handler wrappers are deprecated, we're using 
   ;; ring-defaults wrappers instead.
-  (-> app-routes
-    ;; this part is important (according to ring-defaults doc) 
-    ;; when "app is sitting behind a load balancer or reverse proxy, 
-    ;; as is often the case in cloud-based deployments"
-    (wrap-defaults (assoc site-defaults :proxy true))))
+  ;; we set the proxy to true. according to ring-defaults doc, 
+  ;; when an "app is sitting behind a load balancer or reverse proxy, 
+  ;; as is often the case in cloud-based deployments" we should set
+  ;; the proxy (in the middleware map) to true.
+  ;; we also use "wrap-routes" so that the middleware will be applied
+  ;; AFTER the urls are matched. we do that because the api-defaults middleware
+  ;; is applied even to requests of the other routes with the different
+  ;; middleware, so we use that function to prevent it.
+  (routes
+    (-> mobile-routes
+      (wrap-routes (wrap-defaults (assoc api-defaults :proxy true))))
+    (-> app-routes
+      (wrap-routes (wrap-defaults (assoc site-defaults :proxy true))))))
 
 (defn start [port]
   (jetty/run-jetty app {:port port :join? false}))
