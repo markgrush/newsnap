@@ -106,10 +106,10 @@
   ;; is applied even to requests of the other routes with the different
   ;; middleware, so we use that function to prevent it.
   (routes
-    (-> mobile-routes
-      (wrap-defaults (assoc api-defaults :proxy true)))
     (-> app-routes
       (wrap-defaults (assoc site-defaults :proxy true)))
+    (-> mobile-routes
+      (wrap-defaults (assoc api-defaults :proxy true)))
     not-found-route))
 
 (defn start [port]
