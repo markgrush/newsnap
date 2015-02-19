@@ -83,7 +83,7 @@
 
 ;; routes for mobile - wrapped without browser specific middleware
 (defroutes mobile-routes
-  (POST "/mobile/" [op-name op-email title news] 
+  (POST "/mobile" [op-name op-email title news] 
         (model/create op-name op-email title news))
   (POST "/mobile/:id{n[0-9]+}" [id replier-name replier-email reply] 
         (model/create-reply id replier-name replier-email reply)))
