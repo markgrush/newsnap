@@ -103,9 +103,9 @@
   ;; middleware, so we use that function to prevent it.
   (routes
     (-> mobile-routes
-      (wrap-routes (wrap-defaults (assoc api-defaults :proxy true))))
+      (wrap-routes (assoc api-defaults :proxy true)))
     (-> app-routes
-      (wrap-routes (wrap-defaults (assoc site-defaults :proxy true))))))
+      (wrap-routes (assoc site-defaults :proxy true)))))
 
 (defn start [port]
   (jetty/run-jetty app {:port port :join? false}))
