@@ -105,15 +105,14 @@
   ;; AFTER the urls are matched. we do that because the api-defaults middleware
   ;; is applied even to requests of the other routes with the different
   ;; middleware, so we use that function to prevent it.
-  (routes
-    (context "/mobile" _ (wrap-defaults mobile-routes api-defaults))
-    (wrap-defaults app-routes (assoc api-defaults :proxy true))))
-  ;  (routes 
- ;   (-> app-routes
-  ;    (wrap-defaults (assoc site-defaults :proxy true)))
-   ; (-> mobile-routes
-    ;  (wrap-defaults (assoc api-defaults :proxy true)))
-    ;not-found-route))
+  ;; NON SECURE solution below, at least for now until I figure out 
+  ;; what to do with the middleware interleaving...
+    (routes 
+    (-> app-routes
+      (wrap-defaults (assoc api-defaults :proxy true)))
+    (-> mobile-routes
+      (wrap-defaults (assoc api-defaults :proxy true)))
+    not-found-route))
 
 (defn start [port]
   (jetty/run-jetty app {:port port :join? false}))
