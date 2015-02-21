@@ -107,12 +107,9 @@
   ;; middleware, so we use that function to prevent it.
   ;; NON SECURE solution below, at least for now until I figure out 
   ;; what to do with the middleware interleaving...
-    (routes 
-    (-> mobile-routes
-      (wrap-defaults (assoc api-defaults :proxy true)))
-    (-> app-routes
-      (wrap-defaults (assoc api-defaults :proxy true)))
-    not-found-route))
+    (wrap-defaults
+      (routes mobile-routes app-routes not-found-route)
+      (assoc api-defaults :proxy true)))
 
 (defn start [port]
   (jetty/run-jetty app {:port port :join? false}))
