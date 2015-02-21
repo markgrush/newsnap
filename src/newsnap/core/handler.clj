@@ -108,9 +108,9 @@
   ;; NON SECURE solution below, at least for now until I figure out 
   ;; what to do with the middleware interleaving...
     (routes 
-    (-> app-routes
-      (wrap-defaults (assoc api-defaults :proxy true)))
     (-> mobile-routes
+      (wrap-defaults (assoc api-defaults :proxy true)))
+    (-> app-routes
       (wrap-defaults (assoc api-defaults :proxy true)))
     not-found-route))
 
