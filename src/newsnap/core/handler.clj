@@ -70,7 +70,7 @@
          :media-type content-type}))))
       
 (defroutes app-routes
-  (GET "/" [] all-threads-resource)
+  (GET "/newthread" [] all-threads-resource)
   (POST "/" [op-name op-email title news] 
         (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
