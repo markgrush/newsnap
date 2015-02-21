@@ -4,7 +4,7 @@
 
 (def new-thread-form
   [:div {:class "primary form"}
-     (form/form-to [:post "/newthread"]
+     (form/form-to [:post "/"]
                    ;; MUST add this func to each form to prevent 
                    ;; "Invalid anti-forgery token" message since the 
                    ;; ring-defaults site-defaults wrappers has a 

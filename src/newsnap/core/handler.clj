@@ -71,7 +71,7 @@
       
 (defroutes app-routes
   (GET "/" [] all-threads-resource)
-  (POST "/newthread" [op-name op-email title news] 
+  (POST "/" [op-name op-email title news] 
         (model/create op-name op-email title news))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
@@ -105,9 +105,9 @@
   ;; AFTER the urls are matched. we do that because the api-defaults middleware
   ;; is applied even to requests of the other routes with the different
   ;; middleware, so we use that function to prevent it.
-  (-> (routes mobile-routes
-              (wrap-defaults app-routes (assoc site-defaults :proxy true)))
-    (wrap-defaults api-defaults)))
+  (routes
+    (context "/mobile" _ (wrap-defaults mobile-routes api-defaults))
+    (wrap-defaults app-routes (assoc api-defaults :proxy true))))
   ;  (routes 
  ;   (-> app-routes
   ;    (wrap-defaults (assoc site-defaults :proxy true)))
