@@ -105,9 +105,9 @@
   ;; AFTER the urls are matched. we do that because the api-defaults middleware
   ;; is applied even to requests of the other routes with the different
   ;; middleware, so we use that function to prevent it.
-  (routes 
-    mobile-routes
-    (wrap-defaults app-routes (assoc site-defaults :proxy true))))
+  (-> (routes mobile-routes
+              (wrap-defaults app-routes (assoc site-defaults :proxy true)))
+    (wrap-defaults api-defaults)))
   ;  (routes 
  ;   (-> app-routes
   ;    (wrap-defaults (assoc site-defaults :proxy true)))
