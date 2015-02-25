@@ -39,8 +39,9 @@
   [query]
   [:tr {:class "primary-light"}
    [:td {:width "80%"} [:a {:href (str "/" (:countdownkey query))} (escape-html (:title query))]]
-   [:td [:img {:src "images/like.png" :align "center"}]]
-   [:td [:img {:src "images/dislike.png" :align "center"}]]])
+ ;  [:td [:img {:src "images/like.png" :align "center"}]]
+ ;  [:td [:img {:src "images/dislike.png" :align "center"}]]
+   ])
 
 (defn all-news-table
   []
