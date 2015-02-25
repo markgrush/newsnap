@@ -1,6 +1,5 @@
 (ns newsnap.core.model
-  (:require [clojure.java.jdbc :as sql]
-            [ring.util.response :as ring]
+  (:require [clojure.java.jdbc :as sql]            
             [clojure.data.json :as json]))
 
 ; relative path of db url file
@@ -76,8 +75,7 @@
       (when-not (exists? spec key)
         (create-table key))
       (sql/insert! spec (keyword key) {:name name :email email :title title :body news})
-      (future (countdown title news key))))
-  (ring/redirect "/"))
+      (future (countdown title news key)))))
 
 (defn keywordize
   [string]
@@ -88,5 +86,4 @@
 (defn create-reply
   [table name email reply]
   (when-not (clojure.string/blank? reply)
-    (sql/insert! spec (keywordize table) {:name name :email email :title "" :body reply}))
-  (ring/redirect (str "/" table)))
+    (sql/insert! spec (keywordize table) {:name name :email email :title "" :body reply})))

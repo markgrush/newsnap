@@ -1,13 +1,13 @@
 (ns newsnap.core.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
+            [ring.util.response :as ring]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults api-defaults]]
             [newsnap.core.model :as model]
             [newsnap.core.schema :as schema]
             [liberator.core :refer [defresource]]
             [clojure.data.json :as json]
-            
             [newsnap.view.pages :refer [main-page thread-page]])
   (:gen-class))
 
@@ -72,21 +72,25 @@
 (defroutes app-routes
   (GET "/" [] all-threads-resource)
   (POST "/" [op-name op-email title news] 
-        (model/create op-name op-email title news))
+        (model/create op-name op-email title news)
+        (ring/redirect "/"))
   ;; next time MAKE SURE the :id thingy has a regular expression with it 
   ;; what happened was that it was just :id and the server loads the css file as
   ;; /cssfile.css and triggers this get which can cause problems.
   (GET "/:id{n[0-9]+}" [id] (thread-resource id))
   (POST "/:id{n[0-9]+}" [id replier-name replier-email reply] 
-        (model/create-reply id replier-name replier-email reply))
+        (model/create-reply id replier-name replier-email reply)
+        (ring/redirect (str "/" id)))
   (route/resources "/"))
 
 ;; routes for mobile - wrapped without browser specific middleware
 (defroutes mobile-routes
   (POST "/mobile" [op-name op-email title news] 
-        (model/create op-name op-email title news))
+        (model/create op-name op-email title news)
+        (ring/response "OK"))
   (POST "/mobile/:id{n[0-9]+}" [id replier-name replier-email reply] 
-        (model/create-reply id replier-name replier-email reply)))
+        (model/create-reply id replier-name replier-email reply)
+        (ring/response "OK")))
 
 ;; when combining multiple routes, we must make sure the "route/not-found"
 ;; is in a separate route and placed at the end of all other routes
